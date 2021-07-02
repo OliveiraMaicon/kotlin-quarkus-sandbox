@@ -3,3 +3,35 @@ display:
   unit:
     name: "mph"
     factor: 2.23694
+
+
+
+quarkus:
+  http:
+    port: 8081
+  log:
+    file:
+      enable: true
+      path: /tmp/trace.log
+      level: TRACE
+      format: "[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%p] [%t] [%C{1}] - %m%n%e"
+    min-leve: TRACE
+    console:
+      format: "[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%p] [%t] [%C{1}] - %m%n%e"
+      color: true
+      level: ALL
+    handler:
+#      gelf:
+#        level: ALL
+#        enable: true
+#        host: localhost
+#        port: 8080
+    syslog:
+      level: ALL
+      format: "[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%p] [%t] [%C{1}] - %m%n%e"
+      enable: true
+      endpoint: fluentd.logs-produtos-digitais.svc.cluster.development.br-sp1-a.kubernetes.intranet:80
+      protocol: tcp
+      app-name: logs/myapp.quarkus.log
+      hostname: localhost
+

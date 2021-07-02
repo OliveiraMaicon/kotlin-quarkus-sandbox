@@ -30,6 +30,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.quarkus:quarkus-arc")
     implementation("io.quarkus:quarkus-resteasy")
+    implementation("io.quarkus:quarkus-logging-json")
+    /*implementation("org.jboss.logmanager:log4j2-jboss-logmanager")*/
+    implementation("io.quarkus:quarkus-logging-gelf")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }
@@ -48,7 +51,14 @@ allOpen {
     annotation("io.quarkus.test.junit.QuarkusTest")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
-    kotlinOptions.javaParameters = true
+tasks{
+
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+        kotlinOptions.javaParameters = true
+    }
+
+    withType<Test>{
+        systemProperty("java.util.logging.manager", "org.jboss.logmanager.LogManager")
+    }
 }
